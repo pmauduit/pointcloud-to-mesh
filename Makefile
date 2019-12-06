@@ -6,7 +6,7 @@ BIN_OBJ:=$(BIN_DEP:%.cpp=%.o)
 
 INSTALL_DIR:=./$(BIN)
 
-CC=$(shell which g++-7)
+CC=$(shell which g++)
 GDB=$(shell which gdb)
 VALGRIND=$(shell which valgrind)
 STRIP=$(shell which strip)

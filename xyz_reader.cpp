@@ -5,10 +5,10 @@
 #include <osgDB/ReadFile>
 #include <osgUtil/DelaunayTriangulator>
 #include <osgViewer/Viewer>
+#include <osgGA/UFOManipulator>
 
 
-#define MAX_VERTICES 10000000
-#define Z_FACTOR 20
+#define Z_FACTOR 10.0
 
 namespace pc2m {
     XyzReader::XyzReader(const char * path) {
@@ -16,7 +16,6 @@ namespace pc2m {
         vertices = new osg::Vec3Array();
 
         std::ifstream input(path);
-        int i = 0;
         if (input.is_open()) {
             for(std::string line; std::getline(input, line); ) {
                 std::istringstream in(line);
@@ -24,11 +23,7 @@ namespace pc2m {
                 float x, y, z;
                 in >> x >> y >> z;
                 z *= Z_FACTOR;
-                //std::cout << "x: " << x << " y: " << y << " z: " << z << std::endl;
                 vertices->push_back(osg::Vec3(x,y,z));
-                if (++i == MAX_VERTICES) {
-                    break;
-                }
             }
             input.close();
             std::cout << "Size of array after loading: " << vertices->size() << std::endl;
@@ -75,7 +70,7 @@ int main(int argc, char **argv) {
     // }
 
     osg::Vec4Array* colors = new osg::Vec4Array;
-    colors->push_back(osg::Vec4(1.0f,1.0f,0.0f,1.0f));
+    colors->push_back(osg::Vec4(0.0f,1.0f,0.0f,1.0f));
 
     osg::ref_ptr<osg::Geometry> geometry = new osg::Geometry;
 
@@ -92,6 +87,15 @@ int main(int argc, char **argv) {
 
     osgViewer::Viewer viewer;
     viewer.setSceneData( geode.get() );
+
+    osg::ref_ptr< osg::Light > light = new osg::Light;
+    light->setAmbient(osg::Vec4(1.0f,1.0f,1.0f,1.0f));
+    viewer.setLight(light);
+
+
+    osg::ref_ptr< osgGA::UFOManipulator > manipulator = new osgGA::UFOManipulator( );
+	viewer.setCameraManipulator( manipulator  );
+
     return viewer.run();
 
     return 0;
