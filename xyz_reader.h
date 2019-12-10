@@ -27,10 +27,12 @@ namespace pc2m  {
   class XyzReader {
     private:
         osg::ref_ptr<osg::Vec3Array> vertices;
+        osg::ref_ptr<osg::Vec4Array> colors;
 
     public:
      XyzReader(const char * path);
      osg::Vec3Array * getVertices() { return vertices; }
+     osg::Vec4Array * getColors() { return colors; }
      ~XyzReader();
   };
 }
