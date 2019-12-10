@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 BIN:=pc2m
-BIN_DEP:=xyz_reader.cpp
+BIN_DEP:=pointscloud_reader.cpp main.cpp
 BIN_OBJ:=$(BIN_DEP:%.cpp=%.o)
 
 INSTALL_DIR:=./$(BIN)
@@ -22,6 +22,6 @@ all: $(BIN)
 	$(CC) -c $< -o $@ $(CFLAGS) $(LDFLAGS)
 
 $(BIN): $(BIN_OBJ)
-	$(CC) -o $(BIN) $(BIN_DEP) $(CFLAGS) $(LDFLAGS)
+	$(CC) -o $(BIN) $(BIN_OBJ) $(LDFLAGS)
 clean:
 	rm -f $(BIN) $(BIN_OBJ)
