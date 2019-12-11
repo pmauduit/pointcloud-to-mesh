@@ -11,8 +11,8 @@ GDB=$(shell which gdb)
 VALGRIND=$(shell which valgrind)
 STRIP=$(shell which strip)
 
-CFLAGS=-Wall --std=c++17 $(shell pkg-config --cflags gdal openscenegraph) -g
-LDFLAGS=$(shell pkg-config --libs gdal openscenegraph) -lstdc++fs
+CFLAGS=-Wall --std=c++17 $(shell pkg-config --cflags gdal openscenegraph)  $(shell pdal-config --includes) -g
+LDFLAGS=$(shell pkg-config --libs gdal openscenegraph) $(shell pdal-config --libs)  -lstdc++fs
 
 .PHONY: clean
 

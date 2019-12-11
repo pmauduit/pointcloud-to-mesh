@@ -18,9 +18,11 @@
 
 #include <osgUtil/DelaunayTriangulator>
 
-
-#define Z_FACTOR 1.0
-
+#include <pdal/Dimension.hpp>
+#include <pdal/Options.hpp>
+#include <pdal/PointView.hpp>
+#include <pdal/PointViewIter.hpp>
+#include <pdal/io/LasReader.hpp>
 
 namespace pc2m  {
 

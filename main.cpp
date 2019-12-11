@@ -18,15 +18,15 @@ int main(int argc, char **argv) {
     if ((strcasestr(argv[1], ".laz") != NULL)
         || (strcasestr(argv[1], ".las") != NULL)) {
           std::cout << "LAS/LAZ format detected." << std::endl;
-          return 0;
+          r.lasLoad(inputPath);
     } else {
         std::cout << "Trying to load the file as xyz." << std::endl;
-
         r.xyzLoad(inputPath);
     }
 
 
     osg::Vec3Array * vertices = r.getVertices();
+    std::cout << "Loaded " << vertices->size() << " points." << std::endl;
     // osg::ref_ptr<osg::Vec3Array> current_sample = new osg::Vec3Array;
     // osg::ref_ptr<osg::Vec3Array> total_triangles = new osg::Vec3Array;
 
@@ -44,7 +44,6 @@ int main(int argc, char **argv) {
     //     current_sample = new osg::Vec3Array;
     //   }
     // }
-
 
     osg::ref_ptr<osg::Geometry> geometry = new osg::Geometry;
 
@@ -66,10 +65,8 @@ int main(int argc, char **argv) {
     light->setAmbient(osg::Vec4(1.0f,1.0f,1.0f,1.0f));
     viewer.setLight(light);
 
-
-
     osg::ref_ptr< osgGA::UFOManipulator > manipulator = new osgGA::UFOManipulator( );
-	viewer.setCameraManipulator( manipulator  );
+    viewer.setCameraManipulator( manipulator  );
 
     osg::Camera * camera = viewer.getCamera();
     camera->setClearColor(osg::Vec4(0.094f, 0.247f, 0.539f, 0.1f));
