@@ -1,4 +1,10 @@
 #include "pointscloud_reader.h"
+#include <osgGA/OrbitManipulator>
+#include <osgGA/FlightManipulator>
+#include <osgGA/SphericalManipulator>
+#include <osgGA/NodeTrackerManipulator>
+#include <osgGA/KeySwitchMatrixManipulator>
+
 
 void usage(const char *self) {
     std::cout << "Usage : " << self << " <filename>" << std::endl;
@@ -65,7 +71,12 @@ int main(int argc, char **argv) {
     light->setAmbient(osg::Vec4(1.0f,1.0f,1.0f,1.0f));
     viewer.setLight(light);
 
-    osg::ref_ptr< osgGA::UFOManipulator > manipulator = new osgGA::UFOManipulator( );
+    osg::ref_ptr< osgGA::UFOManipulator > ufoManipulator = new osgGA::UFOManipulator( );
+    osg::ref_ptr< osgGA::OrbitManipulator > orbitManipulator = new osgGA::OrbitManipulator( );
+    //osg::ref_ptr< osgGA::NodeTrackerManipulator > manipulator = new osgGA::NodeTrackerManipulator( );
+    osg::ref_ptr< osgGA::KeySwitchMatrixManipulator > manipulator = new osgGA::KeySwitchMatrixManipulator( );
+    manipulator->addMatrixManipulator('1', "UFO", ufoManipulator);
+    manipulator->addMatrixManipulator('2', "Orbit", orbitManipulator);
     viewer.setCameraManipulator( manipulator  );
 
     osg::Camera * camera = viewer.getCamera();
